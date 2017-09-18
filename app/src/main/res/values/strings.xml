@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SSFSToday</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="lunch">Hello lunch fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="athletics">Hello athletics tab</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="library_beestro">Library Beestro Tab</string>
+
+    <string name="lunch_entree_label">Lunch Entree</string>
+    <string name="vegetarian_label">Vegetarian Entree</string>
+    <string name="soups_label">Souper Soups</string>
+    <string name="sides_label">Sides</string>
+    <string name="deli_label">Downtown Deli</string>
+    <string name="today">Day of Week</string>
+</resources>

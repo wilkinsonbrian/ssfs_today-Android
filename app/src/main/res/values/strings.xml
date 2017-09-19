@@ -16,4 +16,7 @@
     <string name="sides_label">Sides</string>
     <string name="deli_label">Downtown Deli</string>
     <string name="today">Day of Week</string>
+    <string name="library_hours">Library Hours</string>
+    <string name="beestro_hours">Beestro Hours</string>
+    <string name="announce">Announcements</string>
 </resources>

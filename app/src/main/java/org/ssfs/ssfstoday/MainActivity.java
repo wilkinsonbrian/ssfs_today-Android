@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private int[] tabIcons = {
+            R.drawable.ic_tab_lunch,
+            R.drawable.ic_tab_athletics,
+            R.drawable.ic_action_name
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -42,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new Lunch(), "Lunch");
         adapter.addFragment(new Athletics(), "Athletics");
         adapter.addFragment(new LibraryBeestro(), "Library & Beestro");
+        viewPager.setOffscreenPageLimit(2); // so lunch data does not disappear
         viewPager.setAdapter(adapter);
     }
 

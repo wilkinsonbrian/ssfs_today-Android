@@ -1,6 +1,7 @@
 package org.ssfs.ssfstoday;
 
 
+import android.graphics.drawable.ShapeDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ public class Lunch extends Fragment implements AsyncResponse{
     private TextView dayOfWeek;
     public int day;
     public int currentDay;
+    //private ShapeDrawable background;
 
     private LunchMenu weeklyMenu;
 
@@ -67,6 +69,7 @@ public class Lunch extends Fragment implements AsyncResponse{
         veggie = (TextView) view.findViewById(R.id.veggie_entree);
         sides = (TextView) view.findViewById(R.id.sides);
         deli = (TextView) view.findViewById(R.id.deli);
+        //background = (ShapeDrawable) view.findViewById(R.id.ba)
         dayOfWeek = (TextView) view.findViewById(R.id.date_label);
         dayOfWeek.setText(WEEKDAYS[currentDay]);
         return view;

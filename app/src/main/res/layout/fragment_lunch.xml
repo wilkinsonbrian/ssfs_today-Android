@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/meetinghouse" />
+        android:src="@drawable/meetinghouse"
+        android:contentDescription="@string/meeting" />
 
     <RelativeLayout
         android:background="@drawable/text_background"
@@ -41,7 +42,8 @@
             android:layout_below="@id/entree_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/veggie_label"
@@ -57,7 +59,8 @@
             android:layout_below="@id/veggie_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/sides_label"
@@ -73,7 +76,8 @@
             android:layout_below="@id/sides_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
 
 
 
@@ -91,7 +95,8 @@
             android:layout_below="@id/deli_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
 
     </RelativeLayout>
 

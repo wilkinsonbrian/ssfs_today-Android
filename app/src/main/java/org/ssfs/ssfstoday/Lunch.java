@@ -60,6 +60,7 @@ public class Lunch extends Fragment implements AsyncResponse{
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -114,8 +115,8 @@ public class Lunch extends Fragment implements AsyncResponse{
             This method is where the UI is first updated.  The default action is to use the
             information from the current day to populate the initial menu.
              */
-            Lunch.this.weeklyMenu = new LunchMenu(result);
-            Lunch.this.updateMenuItems(currentDay);
+            //Lunch.this.weeklyMenu = new LunchMenu(result, day);
+            //Lunch.this.updateMenuItems(currentDay);
             delegate.processFinish(result);
         }
 

@@ -51,6 +51,14 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        asyncTask = new GetDataFromServer();
+        asyncTask.delegate = this;
+        asyncTask.execute(WEBSERVER);
+    }
+
 
     private String getTodaysDate() {
         Calendar calendar = Calendar.getInstance();
@@ -101,8 +109,6 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
 
         @Override
         protected void onPostExecute(String result) {
-
-            Log.v("Found", result);
             delegate.processFinish(result);
         }
 

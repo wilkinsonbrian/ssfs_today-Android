@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/meetinghouse" />
+        android:src="@drawable/meetinghouse"
+        android:contentDescription="@string/meeting" />
 
     <RelativeLayout
         android:background="@drawable/text_background"

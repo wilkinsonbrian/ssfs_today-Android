@@ -75,11 +75,17 @@ public class LunchMenu {
      * @return the lunch entree for the given day.
      */
     public String getLunchEntree(int dayOfWeek) {
-        Pattern pattern = Pattern.compile("LUNCH ENTRÉE(.*?)VEGETARIAN|DINNER");
+        Pattern pattern;
+        if (dayOfWeek == 1) {
+            pattern = Pattern.compile("VEGETARIAN ENTRÉE(.*?)VEGETARIAN ENTRÉE");
+        } else {
+            pattern = Pattern.compile("LUNCH ENTRÉE(.*?)VEGETARIAN|DINNER");
+        }
+
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
         if (m.find()) {
             return m.group(1);
-        } else return "";
+        } else return "No Lunch Information Found";
     }
 
     public String getVegetarianEntree(int dayOfWeek) {
@@ -87,18 +93,24 @@ public class LunchMenu {
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
         if (m.find()) {
             return m.group(1);
-        } else return "";
+        } else return "No Vegetarian Information Found";
     }
 
     public String getSides(int dayOfWeek) {
-        Pattern pattern = Pattern.compile("SIDES(.*?)DOWNTOWN DELI");
+        Pattern pattern;
+        if (dayOfWeek == 1) {
+            pattern = Pattern.compile("SIDES(.*?)DINNER");
+        } else {
+            pattern = Pattern.compile("SIDES(.*?)DOWNTOWN DELI");
+        }
+
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
         if (m.find()) {
             // Will insert a space if there are more than one side
             // Answer courtesy of David Levine
 
             return m.group(1).replaceAll("(?<=[a-z])[A-Z]", ", $0");
-        } else return "";
+        } else return "No Sides Information Found";
     }
 
     public String getDeli(int dayOfWeek) {
@@ -106,6 +118,6 @@ public class LunchMenu {
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
         if (m.find()) {
             return m.group(1);
-        } else return "";
+        } else return "No Deli Information Found";
     }
 }

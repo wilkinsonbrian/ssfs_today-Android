@@ -73,6 +73,14 @@ public class Athletics extends Fragment implements AsyncResponse {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+        asyncTask = new GetScheduleFromServer();
+        asyncTask.delegate = this;
+        asyncTask.execute(WEBSERVER);
+    }
+
+
     public void processFinish(String output){
 
         games.setText(getGames());
@@ -152,7 +160,7 @@ public class Athletics extends Fragment implements AsyncResponse {
             Matcher n = nextPattern.matcher(newString);
             if (n.find()) {
                 schedule.append(n.group(1));
-                schedule.append("\n");
+                schedule.append("\n\n");
             }
         }
         return schedule.toString();

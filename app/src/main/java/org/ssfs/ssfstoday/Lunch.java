@@ -74,8 +74,13 @@ public class Lunch extends Fragment implements AsyncResponse{
         dayOfWeek = (TextView) view.findViewById(R.id.date_label);
         dayOfWeek.setText(WEEKDAYS[currentDay]);
         return view;
+    }
 
-
+    public void onResume() {
+        super.onResume();
+        asyncTask = new GetLunchMenuFromServer();
+        asyncTask.delegate = this;
+        asyncTask.execute(WEBSERVER);
     }
 
     public void processFinish(String output){

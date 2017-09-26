@@ -88,12 +88,24 @@ public class LunchMenu {
         } else return "No Lunch Information Found";
     }
 
+
     public String getVegetarianEntree(int dayOfWeek) {
         Pattern pattern = Pattern.compile("VEGETARIAN ENTRÉE(.*?)SIDES");
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
-        if (m.find()) {
-            return m.group(1);
-        } else return "No Vegetarian Information Found";
+        if (dayOfWeek == 1) {
+            if (m.find()) {
+                Pattern newPattern = Pattern.compile("VEGETARIAN ENTRÉE(.*)");
+                Matcher n = newPattern.matcher(m.group(1));
+                if (n.find()) {
+                    return n.group(1);
+                } else return "No Vegetarian Information Found";
+            } else return "No Vegetarian Information Found";
+        } else {
+            if (m.find()) {
+                return m.group(1);
+            } else return "No Vegetarian Information Found";
+        }
+
     }
 
     public String getSides(int dayOfWeek) {

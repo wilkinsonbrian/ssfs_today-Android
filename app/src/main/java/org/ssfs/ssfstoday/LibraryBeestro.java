@@ -54,11 +54,11 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
     @Override
     public void onResume() {
         super.onResume();
+        todaysDate = getTodaysDate();
         asyncTask = new GetDataFromServer();
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);
     }
-
 
     private String getTodaysDate() {
         Calendar calendar = Calendar.getInstance();

@@ -39,6 +39,8 @@ public class Athletics extends Fragment implements AsyncResponse {
     private TextView dayOfWeek;
     private String dailyGames;
     private int dayOfMonth;
+    private DateInfo today;
+
 
 
     String rawHtml;
@@ -49,11 +51,7 @@ public class Athletics extends Fragment implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Calendar calendar = Calendar.getInstance();
-        day = calendar.get(Calendar.DAY_OF_WEEK);
-        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        currentDay = day - 1;
-
+        getDateInformation();
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);
 
@@ -73,13 +71,21 @@ public class Athletics extends Fragment implements AsyncResponse {
         return view;
     }
 
+    @Override
     public void onResume() {
         super.onResume();
+        getDateInformation();
         asyncTask = new GetScheduleFromServer();
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);
     }
 
+    public void getDateInformation() {
+        today = new DateInfo();
+        day = today.getDayOfWeek();
+        currentDay = today.getCurrentDay();
+        dayOfMonth = today.getDayOfMonth();
+    }
 
     public void processFinish(String output){
 

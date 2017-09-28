@@ -5,6 +5,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class Lunch extends Fragment implements AsyncResponse{
     //private ShapeDrawable background;
 
     private LunchMenu weeklyMenu;
+    private DateInfo today;
 
     private static final String WEBSERVER = "https://grover.ssfs.org/menus/word/document.xml";
     private static final String[] WEEKDAYS = {"Sunday", "Monday", "Tuesday",
@@ -50,9 +52,7 @@ public class Lunch extends Fragment implements AsyncResponse{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Calendar calendar = Calendar.getInstance();
-        day = calendar.get(Calendar.DAY_OF_WEEK);
-        currentDay = day - 1;
+        getDateInformation();
 
         // Starts the AsyncTask that actually retrieves the lunch data from the server.
         asyncTask.delegate = this;
@@ -76,11 +76,19 @@ public class Lunch extends Fragment implements AsyncResponse{
         return view;
     }
 
+    @Override
     public void onResume() {
         super.onResume();
+        Log.v("Resuming", "Lunch");
         asyncTask = new GetLunchMenuFromServer();
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);
+    }
+
+    public void getDateInformation() {
+        today = new DateInfo();
+        day = today.getDayOfWeek();
+        currentDay = today.getCurrentDay();
     }
 
     public void processFinish(String output){

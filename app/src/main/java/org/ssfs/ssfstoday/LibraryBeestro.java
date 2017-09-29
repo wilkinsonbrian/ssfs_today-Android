@@ -37,6 +37,7 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
     private TextView announce;
     private TextView dayOfWeek;
     private TextView libraryHours;
+    private TextView libraryAnnouncements;
     private TextView beestroHours;
 
 
@@ -81,6 +82,7 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
         libraryHours = (TextView) view.findViewById(R.id.lib_hours);
         beestroHours = (TextView) view.findViewById(R.id.beest_hours);
         dayOfWeek = (TextView) view.findViewById(R.id.date_label);
+        libraryAnnouncements = (TextView) view.findViewById(R.id.library_announcements);
         dayOfWeek.setText(WEEKDAYS[currentDay]);
         return view;
 
@@ -89,8 +91,9 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
     public void processFinish(String output){
         String[] data = output.split(",");
         libraryHours.setText(data[1]);
-        beestroHours.setText(data[2]);
-        announce.setText(data[3]);
+        libraryAnnouncements.setText(data[2]);
+        beestroHours.setText(data[3]);
+        announce.setText(data[4]);
     }
 
     public class GetDataFromServer extends AsyncTask<String, Integer, String> {

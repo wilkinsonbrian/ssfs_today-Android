@@ -101,6 +101,7 @@ public class Lunch extends Fragment implements AsyncResponse{
         Method called when a new value is chosen from the spinner.  The index (day) of the spinner
         is passed to this method.
          */
+        dayOfWeek.setText(WEEKDAYS[currentDay]);
         entree.setText(weeklyMenu.getLunchEntree(day));
         veggie.setText(weeklyMenu.getVegetarianEntree(day));
         sides.setText(weeklyMenu.getSides(day));

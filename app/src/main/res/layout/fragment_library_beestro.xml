@@ -46,8 +46,25 @@
             android:layout_centerInParent="true"/>
 
         <TextView
-            android:id="@+id/beest_hours_label"
+            android:id="@+id/library_announce_label"
             android:layout_below="@id/lib_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lib_announce"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/library_announce_label"
+            android:id="@+id/library_announcements"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/beest_hours_label"
+            android:layout_below="@id/library_announcements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/beestro_hours"

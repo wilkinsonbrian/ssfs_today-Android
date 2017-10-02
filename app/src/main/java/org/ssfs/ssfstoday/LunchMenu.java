@@ -77,9 +77,9 @@ public class LunchMenu {
     public String getLunchEntree(int dayOfWeek) {
         Pattern pattern;
         if (dayOfWeek == 1) {
-            pattern = Pattern.compile("VEGETARIAN ENTRÉE(.*?)VEGETARIAN ENTRÉE");
+            pattern = Pattern.compile("VEGETARIAN ENTR[ÉE]E(.*?)VEGETARIAN ENTR[ÉE]E");
         } else {
-            pattern = Pattern.compile("LUNCH ENTRÉE(.*?)VEGETARIAN|DINNER");
+            pattern = Pattern.compile("LUNCH ENTR[ÉE]E(.*?)VEGETARIAN|DINNER");
         }
 
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
@@ -90,11 +90,11 @@ public class LunchMenu {
 
 
     public String getVegetarianEntree(int dayOfWeek) {
-        Pattern pattern = Pattern.compile("VEGETARIAN ENTRÉE(.*?)SIDES");
+        Pattern pattern = Pattern.compile("VEGETARIAN ENTR[ÉE]E(.*?)SIDES");
         Matcher m = pattern.matcher(individualDayMenus.get(dayOfWeek));
         if (dayOfWeek == 1) {
             if (m.find()) {
-                Pattern newPattern = Pattern.compile("VEGETARIAN ENTRÉE(.*)");
+                Pattern newPattern = Pattern.compile("VEGETARIAN ENTR[ÉE]E(.*)");
                 Matcher n = newPattern.matcher(m.group(1));
                 if (n.find()) {
                     return n.group(1);
@@ -111,7 +111,7 @@ public class LunchMenu {
     public String getSides(int dayOfWeek) {
         Pattern pattern;
         if (dayOfWeek == 1) {
-            pattern = Pattern.compile("SIDES(.*?)DINNER");
+            pattern = Pattern.compile("SIDES(.*?)(DOWNTOWN|DINNER)");
         } else {
             pattern = Pattern.compile("SIDES(.*?)DOWNTOWN DELI");
         }

@@ -79,7 +79,7 @@ public class Lunch extends Fragment implements AsyncResponse{
     @Override
     public void onResume() {
         super.onResume();
-        Log.v("Resuming", "Lunch");
+        getDateInformation();
         asyncTask = new GetLunchMenuFromServer();
         asyncTask.delegate = this;
         asyncTask.execute(WEBSERVER);

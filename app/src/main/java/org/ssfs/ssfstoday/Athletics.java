@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class Athletics extends Fragment implements AsyncResponse {
 
     GetScheduleFromServer asyncTask = new GetScheduleFromServer();
-    private static final String WEBSERVER = "https://www.ssfs.org/athletics/athletics-today";
+    private static final String WEBSERVER = "https://grover.ssfs.org/menus/athletics_schedule.csv";
     public int day;
     public int currentDay;
     private static final String[] WEEKDAYS = {"Sunday", "Monday", "Tuesday",
@@ -37,9 +37,8 @@ public class Athletics extends Fragment implements AsyncResponse {
 
     private TextView games;
     private TextView dayOfWeek;
-    private String dailyGames;
-    private int dayOfMonth;
     private DateInfo today;
+    private String todaysDate;
 
 
 
@@ -82,94 +81,82 @@ public class Athletics extends Fragment implements AsyncResponse {
 
     public void getDateInformation() {
         today = new DateInfo();
-        day = today.getDayOfWeek();
         currentDay = today.getCurrentDay();
-        dayOfMonth = today.getDayOfMonth();
+        todaysDate = today.getTodaysDate();
+        Log.v("Date: ", todaysDate);
     }
 
     public void processFinish(String output){
-
-        games.setText(getGames());
+        dayOfWeek.setText(WEEKDAYS[currentDay]);
+        games.setText(output);
     }
+
+
 
     public class GetScheduleFromServer extends AsyncTask<String, Integer, String> {
         public AsyncResponse delegate = null;
-        String server_response;
 
         @Override
-        protected String doInBackground(String... strings) {
-
-            URL url;
-            HttpURLConnection urlConnection = null;
+        protected String doInBackground(String... params) {
 
             try {
-                url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-
-                int responseCode = urlConnection.getResponseCode();
-
-                if(responseCode == HttpURLConnection.HTTP_OK){
-                    server_response = readStream(urlConnection.getInputStream());
-                    // Log.v("CatalogClient", server_response);
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+                return downloadUrl(params[0]);
             } catch (IOException e) {
-                e.printStackTrace();
+                return "Unable to retrieve web page. URL may be invalid.";
             }
-
-            return null;
         }
+
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            rawHtml = server_response;
-            delegate.processFinish(rawHtml);
-
+        protected void onPostExecute(String result) {
+            delegate.processFinish(result);
         }
-    }
 
-// Converting InputStream to String
+        private String downloadUrl(String myurl) throws  IOException {
+            InputStream is = null;
 
-    private String readStream(InputStream in) {
-        BufferedReader reader = null;
-        StringBuffer response = new StringBuffer();
-        try {
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+
+                /*
+                Reads the XML file from server (grover) and returns the raw xml
+                 */
+                URL url = new URL(myurl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.connect();
+                is = conn.getInputStream();
+
+                return readIt(is);
+            } finally {
+                if (is != null) {
+                    is.close();
                 }
             }
         }
-        return response.toString();
     }
-
-    public String getGames() {
-        StringBuilder schedule = new StringBuilder();
-        Pattern pattern = Pattern.compile("\"fsDay\">" + dayOfMonth + "<(.*?)a>");
-        Matcher m = pattern.matcher(rawHtml);
-        while (m.find()) {
-            String newString = m.group(1);
-            Pattern nextPattern = Pattern.compile("href=\"#\">(.*?)</");
-            Matcher n = nextPattern.matcher(newString);
-            if (n.find()) {
-                schedule.append(n.group(1));
-                schedule.append("\n\n");
+    /*
+    Takes the URL data and appends each line of XML one by one to the Stringbuilder.
+    The final string returned is the complete XML file with all the tags.
+     */
+    public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
+        BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+        String todaysSchedule = "";
+        String line;
+        while ((line = r.readLine()) != null) {
+            String[] items = line.split(",");
+            if (items[0].equals(todaysDate)) {
+                todaysSchedule += items[1] + ": " + items[3] + " vs. " + items[5] + " (" + items[4] + ")" + "\n\n";
             }
         }
-        return schedule.toString();
+
+        if (todaysSchedule.equals("")) {
+            return "No Games Today";
+        } else {
+            return todaysSchedule;
+        }
+
     }
 
 }

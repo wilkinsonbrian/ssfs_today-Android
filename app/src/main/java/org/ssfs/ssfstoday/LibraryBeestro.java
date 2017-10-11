@@ -89,6 +89,7 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
     }
 
     public void processFinish(String output){
+        dayOfWeek.setText(WEEKDAYS[currentDay]);
         String[] data = output.split(",");
         libraryHours.setText(data[1]);
         libraryAnnouncements.setText(data[2]);

@@ -43,7 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/library_hours_label"
             android:id="@+id/lib_hours"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/library_announce_label"
@@ -60,7 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/library_announce_label"
             android:id="@+id/library_announcements"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/beest_hours_label"
@@ -77,7 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beest_hours_label"
             android:id="@+id/beest_hours"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/announcements_label"
@@ -94,7 +100,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/announcements_label"
             android:id="@+id/announcements"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:textAlignment="center" />
 
     </RelativeLayout>
 

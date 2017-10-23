@@ -106,7 +106,9 @@ public class LibraryBeestro extends Fragment implements AsyncResponse {
             try {
                 return downloadUrl(params[0]);
             } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
+                // Will generate an array when split in the processFinish method.
+                return "No response from server,No response from server,No response from server," +
+                        "No response from server,No response from server";
             }
         }
 

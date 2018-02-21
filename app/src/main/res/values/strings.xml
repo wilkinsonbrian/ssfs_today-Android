@@ -20,4 +20,6 @@
     <string name="beestro_hours">Beestro Hours</string>
     <string name="announce">Beestro Announcements</string>
     <string name="lib_announce">Library Announcements</string>
+    <string name="title_activity_lunch">Lunch</string>
+    <string name="background">Tree Bark</string>
 </resources>

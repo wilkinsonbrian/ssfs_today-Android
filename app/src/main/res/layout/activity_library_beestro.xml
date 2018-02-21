@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.ssfs.ssfstoday.LibraryBeestro">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bark_1280x1920"
+        android:contentDescription="@string/background" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="47dp"
+            android:src="@drawable/beestro_title"/>
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="400dp"
+            android:background="@drawable/text_background">
+
+            <TextView
+                android:id="@+id/date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today"
+                android:layout_centerHorizontal="true"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/library_hours_label"
+                android:layout_below="@id/date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/library_hours"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/library_hours_label"
+                android:id="@+id/lib_hours"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/library_announce_label"
+                android:layout_below="@id/lib_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lib_announce"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/library_announce_label"
+                android:id="@+id/library_announcements"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/beest_hours_label"
+                android:layout_below="@id/library_announcements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beestro_hours"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/beest_hours_label"
+                android:id="@+id/beest_hours"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/announcements_label"
+                android:layout_below="@id/beest_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/announce"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/announcements_label"
+                android:id="@+id/announcements"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.ssfs.ssfstoday.Lunch">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bark_1280x1920"
+        android:contentDescription="@string/background" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="47dp"
+            android:src="@drawable/menu_title"/>
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="400dp"
+            android:background="@drawable/text_background">
+
+            <TextView
+                android:id="@+id/date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/today"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/entree_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date_label"
+                android:layout_centerHorizontal="true"
+                android:text="@string/lunch_entree_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lunch_entree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/entree_label"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/veggie_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lunch_entree"
+                android:layout_centerHorizontal="true"
+                android:text="@string/vegetarian_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/veggie_entree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/veggie_label"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/sides_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/veggie_entree"
+                android:layout_centerHorizontal="true"
+                android:text="@string/sides_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sides"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sides_label"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:textAlignment="center" />
+
+
+            <TextView
+                android:id="@+id/deli_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sides"
+                android:layout_centerHorizontal="true"
+                android:text="@string/deli_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/deli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deli_label"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

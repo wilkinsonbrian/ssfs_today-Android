@@ -10,7 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bark_1280x1920" />
+        android:background="@drawable/bark_1280x1920"
+        android:contentDescription="@string/background"/>
 
     <Button
         android:id="@+id/lunch_button"
@@ -40,6 +41,7 @@
         android:layout_width="160dp"
         android:layout_height="75dp"
         android:layout_marginBottom="24dp"
+        android:onClick="goToSchedule"
         android:background="@drawable/bell_schedule_button"
         app:layout_constraintStart_toStartOf="@id/lunch_button"
         app:layout_constraintBottom_toTopOf="@id/athletics_button"/>
@@ -59,6 +61,7 @@
         android:layout_width="160dp"
         android:layout_height="75dp"
         android:layout_marginTop="24dp"
+        android:onClick="goToWildezine"
         android:background="@drawable/wildezine_button"
         app:layout_constraintStart_toStartOf="@id/lunch_button"
         app:layout_constraintTop_toBottomOf="@id/beestro_button" />

@@ -22,4 +22,8 @@
     <string name="lib_announce">Library Announcements</string>
     <string name="title_activity_lunch">Lunch</string>
     <string name="background">Tree Bark</string>
+    <string name="schedule_title">Schedule Title Image</string>
+    <string name="menu_title">Menu Title Image</string>
+    <string name="athletics_title">Athletics Title Image</string>
+    <string name="beestro_title">Library Beestro Title Image</string>
 </resources>

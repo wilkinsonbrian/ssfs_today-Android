@@ -41,8 +41,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".LibraryBeestro"
+        <activity
+            android:name=".LibraryBeestro"
             android:label="Library_Beestro"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/MyMaterialTheme">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".Wildezine"
+            android:label="Wildezine"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/MyMaterialTheme">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".Schedule"
+            android:label="Schedule"
             android:parentActivityName=".MainActivity"
             android:theme="@style/MyMaterialTheme">
 

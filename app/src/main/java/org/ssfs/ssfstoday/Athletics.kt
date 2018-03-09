@@ -1,15 +1,21 @@
 package org.ssfs.ssfstoday
 
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_athletics.*
+import kotlinx.android.synthetic.main.activity_schedule.*
 
 import java.io.BufferedReader
 import java.io.IOException
@@ -35,6 +41,8 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     private var dayOfWeek: TextView? = null
     private var today: DateInfo? = null
     private var todaysDate: String? = null
+    var x1 = 0f
+    var x2 = 0f
 
 
     internal var rawHtml: String? = null
@@ -42,9 +50,41 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_athletics)
+
+        var list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
+
         games = findViewById(R.id.sports_label) as TextView
         dayOfWeek = findViewById(R.id.date_label) as TextView
         dayOfWeek!!.text = WEEKDAYS[currentDay]
+
+        athletics_spinner.adapter = ArrayAdapter(this, R.layout.athletics_spinner_item, list_of_items)
+        athletics_spinner.setSelection(0)
+        athletics_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 2) {
+                    val myIntent = Intent(this@Athletics,
+                            Lunch::class.java)
+                    startActivity(myIntent)
+                } else if (position == 1) {
+                    val myIntent = Intent(this@Athletics,
+                            Schedule::class.java)
+                    startActivity(myIntent)
+                } else if (position == 3) {
+                    val myIntent = Intent(this@Athletics,
+                            LibraryBeestro::class.java)
+                    startActivity(myIntent)
+                } else if (position == 4) {
+                    val myIntent = Intent(this@Athletics,
+                            Wildezine::class.java)
+                    startActivity(myIntent)
+                }
+            }
+
+        }
         getDateInformation()
         asyncTask.delegate = this
         asyncTask.execute(WEBSERVER)
@@ -140,6 +180,37 @@ class Athletics : AppCompatActivity(), AsyncResponse {
             todaysSchedule
         }
 
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        if (event!!.action == MotionEvent.ACTION_DOWN) {
+
+            x1 = event.getX()
+
+        }
+
+        if (event!!.action == MotionEvent.ACTION_UP) {
+            x2 = event.getX()
+
+
+            // if left to right swipe event on screen
+            if (x2 > x1 && currentDay > 1)
+            {
+                currentDay--
+                //updateMenuItems(currentDay)
+            }
+
+            // if right to left swipe event on screen
+            if (x1 > x2 && currentDay < 5)
+            {
+                currentDay++
+                //updateMenuItems(currentDay)
+            }
+        }
+
+        return false
+        //return super.onTouchEvent(event)
     }
 
     companion object {

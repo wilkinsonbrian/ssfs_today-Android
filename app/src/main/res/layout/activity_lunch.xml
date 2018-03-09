@@ -114,6 +114,14 @@
                 android:textAlignment="center" />
 
         </RelativeLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lunch_color"
+            android:id="@+id/pages">
+
+        </Spinner>
     </LinearLayout>
 
 

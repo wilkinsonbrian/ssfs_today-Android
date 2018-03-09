@@ -60,6 +60,14 @@
 
         </RelativeLayout>
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/schedule_color"
+            android:id="@+id/schedule_spinner">
+
+        </Spinner>
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

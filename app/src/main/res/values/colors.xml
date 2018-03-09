@@ -6,4 +6,9 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#BBBB14</color>
+    <color name="lunch_color">#1F92CB</color>
+    <color name="schedule_color">#D1BB41</color>
+    <color name="athletics_color">#4BA367</color>
+    <color name="beestro_color">#BF5A42</color>
+    <color name="wildezine_color">#63547B</color>
 </resources>

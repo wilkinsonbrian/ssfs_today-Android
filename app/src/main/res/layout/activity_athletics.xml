@@ -50,6 +50,13 @@
                 android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/athletics_color"
+            android:id="@+id/athletics_spinner">
+
+        </Spinner>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package org.ssfs.ssfstoday
 
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,7 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_library_beestro.*
+import kotlinx.android.synthetic.main.activity_schedule.*
 
 import org.ssfs.ssfstoday.R
 import org.w3c.dom.Text
@@ -39,6 +44,7 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library_beestro)
+        var list_of_items = arrayOf("Lunch", "Schedule", "Athletics", "Library/Beestro", "Wildezine")
 
         todaysDate = getTodaysDate()
         announce = findViewById(R.id.announcements) as TextView
@@ -47,6 +53,35 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
         dayOfWeek = findViewById(R.id.date_label) as TextView
         libraryAnnouncements = findViewById(R.id.library_announcements) as TextView
         dayOfWeek!!.text = WEEKDAYS[currentDay]
+
+        beestro_spinner.adapter = ArrayAdapter(this, R.layout.beestro_spinner_item, list_of_items)
+        beestro_spinner.setSelection(3)
+        beestro_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) {
+                    val myIntent = Intent(this@LibraryBeestro,
+                            Lunch::class.java)
+                    startActivity(myIntent)
+                } else if (position == 1) {
+                    val myIntent = Intent(this@LibraryBeestro,
+                            Schedule::class.java)
+                    startActivity(myIntent)
+                } else if (position == 2) {
+                    val myIntent = Intent(this@LibraryBeestro,
+                            Athletics::class.java)
+                    startActivity(myIntent)
+                } else if (position == 4) {
+                    val myIntent = Intent(this@LibraryBeestro,
+                            Wildezine::class.java)
+                    startActivity(myIntent)
+                }
+            }
+
+        }
         asyncTask.delegate = this
         asyncTask.execute(WEBSERVER)
     }

@@ -44,7 +44,7 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library_beestro)
-        var list_of_items = arrayOf("Lunch", "Schedule", "Athletics", "Library/Beestro", "Wildezine")
+        val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
         todaysDate = getTodaysDate()
         announce = findViewById(R.id.announcements) as TextView
@@ -62,7 +62,7 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) {
+                if (position == 2) {
                     val myIntent = Intent(this@LibraryBeestro,
                             Lunch::class.java)
                     startActivity(myIntent)
@@ -70,7 +70,7 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
                     val myIntent = Intent(this@LibraryBeestro,
                             Schedule::class.java)
                     startActivity(myIntent)
-                } else if (position == 2) {
+                } else if (position == 0) {
                     val myIntent = Intent(this@LibraryBeestro,
                             Athletics::class.java)
                     startActivity(myIntent)

@@ -36,6 +36,7 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     internal var asyncTask = GetScheduleFromServer()
     var day: Int = 0
     var currentDay: Int = 0
+    var currentDayOfMonth: Int = 0
 
     private var games: TextView? = null
     private var dayOfWeek: TextView? = null
@@ -43,6 +44,7 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     private var todaysDate: String? = null
     var x1 = 0f
     var x2 = 0f
+    var athleticsSchedule: String? = null
 
 
     internal var rawHtml: String? = null
@@ -50,8 +52,9 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_athletics)
-
-        var list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
+        //var test = AthleticsInformation()
+        //athleticsSchedule = test.fullAthleticSchedule
+        val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
         games = findViewById(R.id.sports_label) as TextView
         dayOfWeek = findViewById(R.id.date_label) as TextView
@@ -86,6 +89,7 @@ class Athletics : AppCompatActivity(), AsyncResponse {
 
         }
         getDateInformation()
+        //updateAthleticSchedule()
         asyncTask.delegate = this
         asyncTask.execute(WEBSERVER)
 
@@ -103,13 +107,14 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     fun getDateInformation() {
         today = DateInfo()
         currentDay = today!!.currentDay
+        currentDayOfMonth = today!!.currentDate
         todaysDate = today!!.todaysDate
-        Log.v("Date: ", todaysDate)
     }
 
     override fun processFinish(output: String) {
+        athleticsSchedule = output
         dayOfWeek!!.text = WEEKDAYS[currentDay]
-        games!!.text = output
+        games!!.text = getTodaysGames()
     }
 
 
@@ -143,7 +148,7 @@ class Athletics : AppCompatActivity(), AsyncResponse {
                 val url = URL(myurl)
                 val conn = url.openConnection() as HttpURLConnection
                 conn.readTimeout = 10000
-                conn.connectTimeout = 15000
+               conn.connectTimeout = 15000
                 conn.requestMethod = "GET"
                 conn.connect()
                 `is` = conn.inputStream
@@ -163,24 +168,22 @@ class Athletics : AppCompatActivity(), AsyncResponse {
      */
     @Throws(IOException::class, UnsupportedEncodingException::class)
     fun readIt(stream: InputStream?): String {
+
         val r = BufferedReader(InputStreamReader(stream!!))
         var todaysSchedule = ""
 
         var line: String? = null;
         while ({ line = r.readLine(); line }() != null) {
-            val items = line!!.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            if (items[0] == todaysDate) {
-                todaysSchedule += items[1] + ": " + items[3] + " vs. " + items[5] + " (" + items[4] + ")" + "\n\n"
+            todaysSchedule += line + "\n"
+        }
+
+            return if (todaysSchedule == "") {
+                "No Games Today"
+            } else {
+                todaysSchedule
             }
-        }
 
-        return if (todaysSchedule == "") {
-            "No Games Today"
-        } else {
-            todaysSchedule
         }
-
-    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
@@ -198,19 +201,43 @@ class Athletics : AppCompatActivity(), AsyncResponse {
             if (x2 > x1 && currentDay > 1)
             {
                 currentDay--
-                //updateMenuItems(currentDay)
+                currentDayOfMonth--
             }
 
             // if right to left swipe event on screen
             if (x1 > x2 && currentDay < 5)
             {
                 currentDay++
-                //updateMenuItems(currentDay)
+                currentDayOfMonth++
             }
+            todaysDate = today!!.getDateString(currentDayOfMonth)
+            updateAthleticSchedule()
         }
 
         return false
         //return super.onTouchEvent(event)
+    }
+
+    fun getTodaysGames(): String {
+        var todaysSchedule = ""
+        var temp = athleticsSchedule!!.split("\n")
+        for (line in temp) {
+            var items = line.split(",")
+            if (items[0] == todaysDate) {
+                todaysSchedule += items[1] + ": " + items[3] + " vs. " + items[5] + " (" + items[4] + ")" + "\n\n"
+            }
+        }
+        return if (todaysSchedule == "") {
+            "No Games Today"
+        } else {
+            todaysSchedule
+        }
+
+    }
+
+    fun updateAthleticSchedule() {
+        dayOfWeek!!.text = WEEKDAYS[currentDay]
+        games!!.text = getTodaysGames()
     }
 
     companion object {

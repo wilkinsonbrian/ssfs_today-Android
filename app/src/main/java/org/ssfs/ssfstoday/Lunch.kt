@@ -47,7 +47,7 @@ class Lunch : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lunch)
-        var list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
+        val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
         entree = findViewById(R.id.lunch_entree) as TextView
         veggie = findViewById(R.id.veggie_entree) as TextView

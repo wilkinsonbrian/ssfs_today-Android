@@ -52,8 +52,7 @@ class Athletics : AppCompatActivity(), AsyncResponse {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_athletics)
-        //var test = AthleticsInformation()
-        //athleticsSchedule = test.fullAthleticSchedule
+
         val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
         games = findViewById(R.id.sports_label) as TextView

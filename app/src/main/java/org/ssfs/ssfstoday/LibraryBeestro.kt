@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -35,18 +36,25 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
 
     private var todaysDate: String? = null
     private var currentDay: Int = 0
+    var currentDayOfMonth: Int = 0
+    private var today: DateInfo? = null
+
+    var x1 = 0f
+    var x2 = 0f
+
     private var announce: TextView? = null
     private var dayOfWeek: TextView? = null
     private var libraryHours: TextView? = null
     private var libraryAnnouncements: TextView? = null
     private var beestroHours: TextView? = null
+    private var libraryBeestroSchedule: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library_beestro)
         val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
-        todaysDate = getTodaysDate()
+        //todaysDate = getTodaysDate()
         announce = findViewById(R.id.announcements) as TextView
         libraryHours = findViewById(R.id.lib_hours) as TextView
         beestroHours = findViewById(R.id.beest_hours) as TextView
@@ -82,36 +90,31 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
             }
 
         }
+        getDateInformation()
         asyncTask.delegate = this
         asyncTask.execute(WEBSERVER)
     }
 
     override fun onResume() {
         super.onResume()
-        todaysDate = getTodaysDate()
+        //todaysDate = getTodaysDate()
+        getDateInformation()
         asyncTask = GetDataFromServer()
         asyncTask.delegate = this
         asyncTask.execute(WEBSERVER)
     }
 
-    private fun getTodaysDate(): String {
-        val calendar = Calendar.getInstance()
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
-        val year = calendar.get(Calendar.YEAR)
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        currentDay = dayOfWeek - 1
-        return Integer.toString(month + 1) + "/" + Integer.toString(day) + "/" + Integer.toString(year)
+    fun getDateInformation() {
+        today = DateInfo()
+        currentDay = today!!.currentDay
+        currentDayOfMonth = today!!.currentDate
+        todaysDate = today!!.todaysDate
     }
-
-
+    
     override fun processFinish(output: String) {
-        dayOfWeek!!.text = WEEKDAYS[currentDay]
-        val data = output.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-        libraryHours!!.setText(data[1])
-        libraryAnnouncements!!.setText(data[2])
-        beestroHours!!.setText(data[3])
-        announce!!.setText(data[4])
+        libraryBeestroSchedule = output
+
+        updateLibraryBeestroSchedule()
     }
 
     inner class GetDataFromServer : AsyncTask<String, Int, String>() {
@@ -166,16 +169,68 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
     @Throws(IOException::class, UnsupportedEncodingException::class)
     fun readIt(stream: InputStream?): String {
         val r = BufferedReader(InputStreamReader(stream!!))
+        var todaysSchedule = ""
 
         var line: String? = null;
         while ({ line = r.readLine(); line }() != null) {
-            val items = line!!.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            if (items[0] == todaysDate) {
-                return line!!
-            }
+            todaysSchedule += line + "\n"
         }
 
-        return "No data found"
+        return if (todaysSchedule == "") {
+            "No response from server,No response from server,No response from server," + "No response from server,No response from server"
+        } else {
+            todaysSchedule
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        if (event!!.action == MotionEvent.ACTION_DOWN) {
+
+            x1 = event.getX()
+
+        }
+
+        if (event!!.action == MotionEvent.ACTION_UP) {
+            x2 = event.getX()
+
+
+            // if left to right swipe event on screen
+            if (x2 > x1 && currentDay > 1)
+            {
+                currentDay--
+                currentDayOfMonth--
+            }
+
+            // if right to left swipe event on screen
+            if (x1 > x2 && currentDay < 5)
+            {
+                currentDay++
+                currentDayOfMonth++
+            }
+            todaysDate = today!!.getDateString(currentDayOfMonth)
+            updateLibraryBeestroSchedule()
+        }
+
+        return false
+        //return super.onTouchEvent(event)
+    }
+
+    fun updateLibraryBeestroSchedule() {
+        // var todaysSchedule = ""
+        var temp = libraryBeestroSchedule!!.split("\n")
+        for (line in temp) {
+            var items = line.split(",")
+            if (items[0] == todaysDate) {
+                val data = items
+                dayOfWeek!!.text = WEEKDAYS[currentDay]
+                libraryHours!!.setText(data[1])
+                libraryAnnouncements!!.setText(data[2])
+                beestroHours!!.setText(data[3])
+                announce!!.setText(data[4])
+                break
+            }
+        }
     }
 
     companion object {

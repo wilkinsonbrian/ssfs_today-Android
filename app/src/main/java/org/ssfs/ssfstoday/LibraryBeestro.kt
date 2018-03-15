@@ -110,7 +110,7 @@ class LibraryBeestro : AppCompatActivity(), AsyncResponse {
         currentDayOfMonth = today!!.currentDate
         todaysDate = today!!.todaysDate
     }
-    
+
     override fun processFinish(output: String) {
         libraryBeestroSchedule = output
 

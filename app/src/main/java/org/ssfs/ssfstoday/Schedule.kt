@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -21,12 +22,19 @@ class Schedule : AppCompatActivity(), AsyncResponse {
     private var today: DateInfo? = null
     private var todaysDate: String? = null
     private var currentDay: Int = 0
+    var currentDayOfMonth: Int = 0
+    private var fullSemesterScehdule: String? = null
+
+    // Needed to detect right and left swipes
+    var x1 = 0f
+    var x2 = 0f
+
     internal var asyncTask = GetScheduleFromServer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule)
-        var list_of_items = arrayOf("Lunch", "Schedule", "Athletics", "Library/Beestro", "Wildezine")
+        val list_of_items = arrayOf("Athletics", "Schedule", "Lunch", "Library/Beestro", "Wildezine")
 
         sched = findViewById(R.id.schedule_view) as TextView
         dayOfWeek = findViewById(R.id.date_label) as TextView
@@ -40,11 +48,11 @@ class Schedule : AppCompatActivity(), AsyncResponse {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) {
+                if (position == 2) {
                     val myIntent = Intent(this@Schedule,
                             Lunch::class.java)
                     startActivity(myIntent)
-                } else if (position == 2) {
+                } else if (position == 0) {
                     val myIntent = Intent(this@Schedule,
                             Athletics::class.java)
                     startActivity(myIntent)
@@ -77,12 +85,13 @@ class Schedule : AppCompatActivity(), AsyncResponse {
     fun getDateInformation() {
         today = DateInfo()
         currentDay = today!!.currentDay
+        currentDayOfMonth = today!!.currentDate
         todaysDate = today!!.todaysDate
     }
 
     override fun processFinish(output: String) {
-        dayOfWeek!!.text = WEEKDAYS[currentDay]
-        sched!!.text = output
+        fullSemesterScehdule = output
+        updateSchedule()
     }
 
     inner class GetScheduleFromServer : AsyncTask<String, Int, String>() {
@@ -140,10 +149,8 @@ class Schedule : AppCompatActivity(), AsyncResponse {
 
         var line: String? = null;
         while ({ line = r.readLine(); line }() != null) {
-            val items = line!!.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            if (items[1] == todaysDate) {
-                todaysSchedule += items[0] + "\n" + items[2] + " - " + items[4] + "\n\n"
-            }
+            todaysSchedule += line + "\n"
+
         }
 
         return if (todaysSchedule == "") {
@@ -153,6 +160,56 @@ class Schedule : AppCompatActivity(), AsyncResponse {
         }
 
     }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        if (event!!.action == MotionEvent.ACTION_DOWN) {
+
+            x1 = event.getX()
+
+        }
+
+        if (event!!.action == MotionEvent.ACTION_UP) {
+            x2 = event.getX()
+
+
+            // if left to right swipe event on screen
+            if (x2 > x1 && currentDay > 1)
+            {
+                currentDay--
+                currentDayOfMonth--
+            }
+
+            // if right to left swipe event on screen
+            if (x1 > x2 && currentDay < 5)
+            {
+                currentDay++
+                currentDayOfMonth++
+            }
+            todaysDate = today!!.getDateString(currentDayOfMonth)
+            updateSchedule()
+        }
+
+        return false
+        //return super.onTouchEvent(event)
+    }
+
+    fun updateSchedule() {
+        var todaysSchedule = ""
+        var temp = fullSemesterScehdule!!.split("\n")
+        for (line in temp) {
+            var items = line.split(",")
+            println(items[0] + ", " + todaysDate + ", " + (items[0] == todaysDate))
+            if (items[0] == todaysDate) {
+                todaysSchedule += items[1] + "\n" + items[2] + " - " + items[4] + "\n\n"
+            }
+        }
+
+        dayOfWeek!!.text = WEEKDAYS[currentDay]
+        sched!!.text = todaysSchedule
+
+    }
+
 
     companion object {
         private val WEBSERVER = "https://grover.ssfs.org/menus/calendar.csv"

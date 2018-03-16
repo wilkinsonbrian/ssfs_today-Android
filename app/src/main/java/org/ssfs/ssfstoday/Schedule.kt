@@ -199,10 +199,13 @@ class Schedule : AppCompatActivity(), AsyncResponse {
         var temp = fullSemesterScehdule!!.split("\n")
         for (line in temp) {
             var items = line.split(",")
-            println(items[0] + ", " + todaysDate + ", " + (items[0] == todaysDate))
-            if (items[0] == todaysDate) {
-                todaysSchedule += items[1] + "\n" + items[2] + " - " + items[4] + "\n\n"
+            //println(items[0] + ", " + todaysDate + ", " + (items[0] == todaysDate))
+            if (items.size > 1) {
+                if (items[1] == todaysDate) {
+                    todaysSchedule += items[0] + "\n" + items[2] + " - " + items[4] + "\n\n"
+                }
             }
+
         }
 
         dayOfWeek!!.text = WEEKDAYS[currentDay]

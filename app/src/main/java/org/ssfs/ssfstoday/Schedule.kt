@@ -215,7 +215,7 @@ class Schedule : AppCompatActivity(), AsyncResponse {
 
 
     companion object {
-        private val WEBSERVER = "https://grover.ssfs.org/menus/calendar.csv"
+        private val WEBSERVER = "https://grover.ssfs.org/menus/cal_file_sorted.csv"
         private val WEEKDAYS = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
     }
 }
